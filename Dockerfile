@@ -59,6 +59,11 @@ RUN apt-get update -yqq \
     && apt-get install -y -q --no-install-recommends \
        ssmtp
 
+# Install redis extensions
+RUN pecl install -o -f redis \
+&&  rm -rf /tmp/pear \
+&&  docker-php-ext-enable redis
+
 # Add default timezone
 RUN echo $LYBERTEAM_TIME_ZONE > /etc/timezone
 RUN echo "date.timezone=$LYBERTEAM_TIME_ZONE" > /etc/php/7.2/cli/conf.d/timezone.ini
